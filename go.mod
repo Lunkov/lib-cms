@@ -1,4 +1,4 @@
-module github.com/Lunkov/lib-press
+module github.com/Lunkov/lib-cms
 
 go 1.13
 
