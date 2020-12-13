@@ -11,13 +11,13 @@ import (
   "github.com/Lunkov/lib-tr"
 )
 
-func getLanguage(params map[string]string, default_lang string) string {
+func getLanguage(params map[string]string, defaultLang string) string {
   lang, ok := params["lang"]
   if !ok {
-    if default_lang == "" {
+    if defaultLang == "" {
       return GetConfig().Main.DefaultLang
     }
-    return default_lang
+    return defaultLang
   }
   return lang
 }
@@ -51,13 +51,13 @@ func UILogin(w http.ResponseWriter, r *http.Request)  {
   for key, value := range r.Form {
     post[key] = value[0]
   }
-  auth_code := r.Form.Get("auth_code")
+  authCode := r.Form.Get("auth_code")
   login := r.Form.Get("login")
   password := r.Form.Get("password")
 
   sessionID := auth.SessionHTTPStart(w, r)
-  if login != "" && password != "" && auth_code != "" {
-    user, ok := auth.AuthUser(auth_code, &post)
+  if login != "" && password != "" && authCode != "" {
+    user, ok := auth.AuthUser(authCode, &post)
     if ok {
       if glog.V(9) {
         glog.Infof("DBG: GO TO AFTER LOGIN PAGE: %s", GetConfig().UI.AfterLoginPage)
@@ -90,10 +90,10 @@ func UIRedirect(w http.ResponseWriter, r *http.Request)  {
   params := mux.Vars(r)
   user, ok := auth.SessionHTTPUserInfo(w, r)
   if ok {
-    http.Redirect(w, r, GetConfig().UI.AfterLoginPage + getLanguage(params, user.Language), http.StatusMovedPermanently)
+    http.Redirect(w, r, GetConfig().UI.AfterLoginPage + getLanguage(params, user.Language), http.StatusTemporaryRedirect)
     return
   }
-  http.Redirect(w, r, GetConfig().UI.DefaultPage + getLanguage(params, GetConfig().Main.DefaultLang), http.StatusMovedPermanently)
+  http.Redirect(w, r, GetConfig().UI.DefaultPage + getLanguage(params, GetConfig().Main.DefaultLang), http.StatusTemporaryRedirect)
 }
 
 func UIPage(w http.ResponseWriter, r *http.Request)  {
@@ -122,7 +122,7 @@ func UIPrivatePage(w http.ResponseWriter, r *http.Request)  {
   params := mux.Vars(r)
   user, ok := auth.SessionHTTPUserInfo(w, r)
   if !ok {
-    http.Redirect(w, r, GetConfig().UI.LoginPage + getLanguage(params, GetConfig().Main.DefaultLang), http.StatusMovedPermanently)
+    http.Redirect(w, r, GetConfig().UI.LoginPage + getLanguage(params, GetConfig().Main.DefaultLang), http.StatusTemporaryRedirect)
     return
   }
   data := map[string]interface{}{"LANGS": (*tr.GetList()), "IS_AUTH": true, "USER": maps.ConvertToMap(user)}

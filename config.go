@@ -34,8 +34,8 @@ type  APIInfo struct {
 }
 
 type  WebSocketInfo struct {
-  Url                string   `yaml:"url"`
-  ExternalUrl        string   `yaml:"external_url"`
+  URL                string   `yaml:"url"`
+  ExternalURL        string   `yaml:"external_url"`
 }
 
 type MainInfo struct {
@@ -44,7 +44,7 @@ type MainInfo struct {
   DefaultLang     string   `yaml:"lang"`
   HTTPPort        string   `yaml:"port"`
   EnableUI        bool     `yaml:"enable-ui"`
-  Url             string   `yaml:"url"`
+  URL             string   `yaml:"url"`
   Storage         string   `yaml:"storage"`
   StaticFiles     string   `yaml:"static_files"`
 }
