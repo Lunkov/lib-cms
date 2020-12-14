@@ -67,7 +67,9 @@ func UILogin(w http.ResponseWriter, r *http.Request)  {
       return
     }
   }
-  
+  if glog.V(9) {
+    glog.Infof("DBG: RENDER LOGIN PAGE")
+  }
   data := map[string]interface{}{"OAUTH_STATE": SHA1(sessionID), "AUTH_PWD_TYPES": (*auth.GetListPwd()), "AUTH_OAUTH_TYPES": (*auth.GetListOAuth()), "LANGS": (*tr.GetList()) }
   f := ui.RenderPage(getLanguage(params, GetConfig().Main.DefaultLang), "login", GetConfig().UI.CSS, false, &data)
   w.Write([]byte(f))
@@ -90,10 +92,10 @@ func UIRedirect(w http.ResponseWriter, r *http.Request)  {
   params := mux.Vars(r)
   user, ok := auth.SessionHTTPUserInfo(w, r)
   if ok {
-    http.Redirect(w, r, GetConfig().UI.AfterLoginPage + getLanguage(params, user.Language), http.StatusTemporaryRedirect)
+    http.Redirect(w, r, GetConfig().UI.AfterLoginPage + getLanguage(params, user.Language), http.StatusMovedPermanently)
     return
   }
-  http.Redirect(w, r, GetConfig().UI.DefaultPage + getLanguage(params, GetConfig().Main.DefaultLang), http.StatusTemporaryRedirect)
+  http.Redirect(w, r, GetConfig().UI.DefaultPage + getLanguage(params, GetConfig().Main.DefaultLang), http.StatusMovedPermanently)
 }
 
 func UIPage(w http.ResponseWriter, r *http.Request)  {
