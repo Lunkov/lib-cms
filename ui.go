@@ -35,7 +35,7 @@ func UILogin(w http.ResponseWriter, r *http.Request)  {
     glog.Infof("DBG: LOGIN")
   }
   
-  w.Header().Set("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0")
+  w.Header().Set("Content-Type", "text/html; charset=utf-8")
   params := mux.Vars(r)
   user, ok := auth.SessionHTTPUserInfo(w, r)
   if ok {
