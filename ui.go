@@ -109,6 +109,9 @@ func UIPage(w http.ResponseWriter, r *http.Request)  {
   data := map[string]interface{}{"LANGS": (*tr.GetList()), "IS_AUTH": false}
   if ok {
     data["USER"] = maps.ConvertToMap(user)
+    if glog.V(9) {
+      glog.Infof("DBG: ConvertToMap %v => %v", user, data["USER"])
+    }
     data["IS_AUTH"] = true
   }
   f := ui.RenderPage(getLanguage(params, GetConfig().Main.DefaultLang), getPage(params), GetConfig().UI.CSS, false, &data)
