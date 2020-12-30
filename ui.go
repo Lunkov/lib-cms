@@ -5,7 +5,7 @@ import (
   "github.com/golang/glog"
   "github.com/gorilla/mux"
 
-  "github.com/Lunkov/lib-map"
+  //"github.com/Lunkov/lib-map"
   "github.com/Lunkov/lib-auth"
   "github.com/Lunkov/lib-ui"
   "github.com/Lunkov/lib-tr"
@@ -127,7 +127,7 @@ func UIPrivatePage(w http.ResponseWriter, r *http.Request)  {
     http.Redirect(w, r, GetConfig().UI.LoginPage + getLanguage(params, GetConfig().Main.DefaultLang), http.StatusTemporaryRedirect)
     return
   }
-  data := map[string]interface{}{"LANGS": (*tr.GetList()), "IS_AUTH": true, "USER": maps.ConvertToMap(user)}
+  data := map[string]interface{}{"LANGS": (*tr.GetList()), "IS_AUTH": true, "USER": &user} //maps.ConvertToMap(user)}
   f := ui.RenderPage(getLanguage(params, GetConfig().Main.DefaultLang), getPage(params), GetConfig().UI.CSS, true, &data)
   w.Write([]byte(f))
 }
