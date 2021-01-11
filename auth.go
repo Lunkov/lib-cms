@@ -24,3 +24,8 @@ func AuthClose() {
   auth.Close()
   auth.SessionClose()
 }
+
+func AuthRestart() {
+  AuthClose()
+  AuthInit()
+}

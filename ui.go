@@ -37,6 +37,17 @@ func UILogin(w http.ResponseWriter, r *http.Request)  {
   
   w.Header().Set("Content-Type", "text/html; charset=utf-8")
   params := mux.Vars(r)
+  
+  if auth.SessionHasError() {
+    if GetConfig().Main.AuthRestart {
+      AuthRestart()
+    }
+    data := map[string]interface{}{"LANGS": (*tr.GetList()), "IS_AUTH": false, "AUTH_ERROR": "AUTH ERROR"}
+    f := ui.RenderPage(getLanguage(params, GetConfig().Main.DefaultLang), GetConfig().UI.ErrorLoginPage, GetConfig().UI.CSS, false, &data)
+    w.Write([]byte(f))
+    return
+  }
+  
   user, ok := auth.SessionHTTPUserInfo(w, r)
   if ok {
     if glog.V(9) {

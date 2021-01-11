@@ -44,6 +44,7 @@ type MainInfo struct {
   DefaultLang     string   `yaml:"lang"`
   HTTPPort        string   `yaml:"port"`
   EnableUI        bool     `yaml:"enable-ui"`
+  AuthRestart     bool     `yaml:"auth-restart"`
   URL             string   `yaml:"url"`
   Storage         string   `yaml:"storage"`
   StaticFiles     string   `yaml:"static_files"`
