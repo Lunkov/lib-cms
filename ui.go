@@ -38,7 +38,7 @@ func UILogin(w http.ResponseWriter, r *http.Request)  {
   w.Header().Set("Content-Type", "text/html; charset=utf-8")
   params := mux.Vars(r)
   
-  if auth.SessionHasError() {
+  if auth.SessionHasError() || auth.Count() < 1 {
     if GetConfig().Main.AuthRestart {
       AuthRestart()
     }
