@@ -43,7 +43,7 @@ func UILogin(w http.ResponseWriter, r *http.Request)  {
       AuthRestart()
     }
     data := map[string]interface{}{"LANGS": (*tr.GetList()), "IS_AUTH": false, "AUTH_ERROR": "AUTH ERROR"}
-    f := ui.RenderPage(getLanguage(params, GetConfig().Main.DefaultLang), GetConfig().UI.ErrorLoginPage, GetConfig().UI.CSS, false, &data)
+    f := ui.RenderPage(getLanguage(params, GetConfig().Main.DefaultLang), "error_login", GetConfig().UI.CSS, false, &data)
     w.Write([]byte(f))
     return
   }
