@@ -5,7 +5,6 @@ import (
   "github.com/golang/glog"
   "github.com/gorilla/mux"
 
-  //"github.com/Lunkov/lib-map"
   "github.com/Lunkov/lib-auth"
   "github.com/Lunkov/lib-ui"
   "github.com/Lunkov/lib-tr"

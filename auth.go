@@ -14,7 +14,7 @@ func AuthInit() {
     glog.Warningf("WRN: SESSION: Init error")
   }
   
-  env.LoadFromYMLFiles(GetConfig().ConfigPath + "/auth/", auth.LoadYAML)
+  env.LoadFromFiles(GetConfig().ConfigPath + "/auth/", "", auth.LoadYAML)
   if auth.Count() < 1 {
     glog.Warningf("WRN: AUTH: Not Found auth connectors")
   }
