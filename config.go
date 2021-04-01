@@ -12,19 +12,25 @@ import (
   "github.com/Lunkov/lib-env"
   "github.com/Lunkov/lib-auth"
   "github.com/Lunkov/lib-tr"
+  "github.com/Lunkov/lib-cache"
 )
 
 type UIInfo struct {
-  CSS                string   `yaml:"css"`
-  DefaultPage        string   `yaml:"default_page"`
-  LoginPage          string   `yaml:"login_page"`
-  AfterLoginPage     string   `yaml:"after_login_page"`
-  ErrorLoginPage     string   `yaml:"error_login_page"`
-  LogoutPage         string   `yaml:"logout_page"`
-  PrivateZone        string   `yaml:"private_zone"`
-  PublicZone         string   `yaml:"public_zone"`
-  EnableFileWatcher  bool     `yaml:"enable_filewatcher"`
-  EnableMinify       bool     `yaml:"enable_minify"`
+  CSS                string              `yaml:"css"`
+  DefaultPage        string              `yaml:"default_page"`
+  LoginPage          string              `yaml:"login_page"`
+  AfterLoginPage     string              `yaml:"after_login_page"`
+  ErrorLoginPage     string              `yaml:"error_login_page"`
+  LogoutPage         string              `yaml:"logout_page"`
+  PrivateZone        string              `yaml:"private_zone"`
+  PublicZone         string              `yaml:"public_zone"`
+  EnableFileWatcher  bool                `yaml:"enable_filewatcher"`
+  EnableMinify       bool                `yaml:"enable_minify"`
+  PathTemplates      string              `yaml:"path_templates"`
+  CacheForms         cache.CacheConfig   `yaml:"cache_forms"`
+  CacheViews         cache.CacheConfig   `yaml:"cache_views"`
+  CachePages         cache.CacheConfig   `yaml:"cache_pages"`
+  CacheRenders       cache.CacheConfig   `yaml:"cache_renders"`
 }
 
 type  APIInfo struct {
@@ -62,17 +68,15 @@ type ConfigInfo struct {
   PostgresRead    models.PostgreSQLInfo   `yaml:"postgres_read"`
 }
 
-var globConf = ConfigInfo{}
-
-func SetConfig(conf ConfigInfo) {
-  globConf = conf
+func (c *CMS)_SetConfig(conf ConfigInfo) {
+  c.Conf = conf
 }
 
-func GetConfig() *ConfigInfo {
-  return &globConf
+func (c *CMS)_GetConfig() *ConfigInfo {
+  return &c.Conf
 }
 
-func LoadConfig(filename string, waittime int) ConfigInfo {
+func (c *CMS)_LoadConfig(filename string, waittime int) {
   var err error
   var conf = ConfigInfo{ Main: MainInfo{ Title: "" }, Session: auth.SessionInfo{ Mode: "memory", Expiry_time: 120 }}
 
@@ -81,7 +85,6 @@ func LoadConfig(filename string, waittime int) ConfigInfo {
   yamlFile, err := ioutil.ReadFile(filename)
   if err != nil {
     glog.Errorf("ERR: yamlFile(%s)  #%v ", filename, err)
-    return conf
   }
 
   err = yaml.Unmarshal(yamlFile, &conf)
@@ -109,7 +112,6 @@ func LoadConfig(filename string, waittime int) ConfigInfo {
       glog.Infof("LOG: DefaultLang = '%s'", conf.Main.DefaultLang)
     }
   }
-
-  return conf
+  c.Conf = conf
 }
 
