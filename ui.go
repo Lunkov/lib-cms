@@ -28,7 +28,7 @@ func (c *CMS) GetPage(params map[string]string) string {
 }
 
 
-func (cm *CMS)_UILogin(w http.ResponseWriter, r *http.Request)  {
+func (cm *CMS) UILogin(w http.ResponseWriter, r *http.Request)  {
   if glog.V(9) {
     glog.Infof("DBG: LOGIN")
   }
@@ -84,7 +84,7 @@ func (cm *CMS)_UILogin(w http.ResponseWriter, r *http.Request)  {
   w.Write([]byte(f))
 }
 
-func (c *CMS)_UILogout(w http.ResponseWriter, r *http.Request)  {
+func (c *CMS) UILogout(w http.ResponseWriter, r *http.Request)  {
   if glog.V(9) {
     glog.Infof("DBG: LOGOUT")
   }
@@ -93,7 +93,7 @@ func (c *CMS)_UILogout(w http.ResponseWriter, r *http.Request)  {
   http.Redirect(w, r, c.Conf.UI.DefaultPage, http.StatusMovedPermanently)
 }
 
-func (c *CMS)_UIRedirect(w http.ResponseWriter, r *http.Request)  {
+func (c *CMS) UIRedirect(w http.ResponseWriter, r *http.Request)  {
   if glog.V(9) {
     glog.Infof("DBG: HOME REDIRECT: %v", r.URL.String())
   }
@@ -107,7 +107,7 @@ func (c *CMS)_UIRedirect(w http.ResponseWriter, r *http.Request)  {
   http.Redirect(w, r, c.Conf.UI.DefaultPage + c.GetLanguage(params, c.Conf.Main.DefaultLang), http.StatusMovedPermanently)
 }
 
-func (c *CMS)_UIPage(w http.ResponseWriter, r *http.Request)  {
+func (c *CMS) UIPage(w http.ResponseWriter, r *http.Request)  {
   if glog.V(9) {
     glog.Infof("DBG: PUBLIC PAGE")
   }
@@ -124,7 +124,7 @@ func (c *CMS)_UIPage(w http.ResponseWriter, r *http.Request)  {
   w.Write([]byte(f))
 }
 
-func (c *CMS)_UIPrivatePage(w http.ResponseWriter, r *http.Request)  {
+func (c *CMS) UIPrivatePage(w http.ResponseWriter, r *http.Request)  {
   if glog.V(9) {
     glog.Infof("DBG: PRIVATE PAGE")
   }
