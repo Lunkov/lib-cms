@@ -76,7 +76,7 @@ func (c *CMS)_GetConfig() *ConfigInfo {
   return &c.Conf
 }
 
-func (c *CMS)_LoadConfig(filename string, waittime int) {
+func (c *CMS) LoadConfig(filename string, waittime int) {
   var err error
   var conf = ConfigInfo{ Main: MainInfo{ Title: "" }, Session: auth.SessionInfo{ Mode: "memory", Expiry_time: 120 }}
 
