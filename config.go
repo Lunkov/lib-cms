@@ -68,11 +68,11 @@ type ConfigInfo struct {
   PostgresRead    models.PostgreSQLInfo   `yaml:"postgres_read"`
 }
 
-func (c *CMS)_SetConfig(conf ConfigInfo) {
+func (c *CMS) SetConfig(conf ConfigInfo) {
   c.Conf = conf
 }
 
-func (c *CMS)_GetConfig() *ConfigInfo {
+func (c *CMS) GetConfig() *ConfigInfo {
   return &c.Conf
 }
 
