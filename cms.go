@@ -9,16 +9,23 @@ import (
 
   "github.com/Lunkov/lib-ui"
   "github.com/Lunkov/lib-auth"
+  "github.com/Lunkov/lib-model"
 )
 
 type CMS struct {
   Conf       ConfigInfo
+  DB        *models.DBConn
   U         *ui.UI
   HasError   bool
 }
 
 func New() *CMS {
   return &CMS{}
+}
+
+func (c *CMS) InitDB() {
+  c.DB = models.New()
+  c.DB.Init(models.ConnectStr(c.Conf.PostgresWrite), models.ConnectStr(c.Conf.PostgresRead), c.Conf.ConfigPath)
 }
 
 func (c *CMS) InitUI() {
