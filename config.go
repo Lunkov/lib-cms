@@ -40,8 +40,8 @@ type  APIInfo struct {
 }
 
 type  WebSocketInfo struct {
-  URL                string   `yaml:"url"`
-  ExternalURL        string   `yaml:"external_url"`
+  Url                string   `yaml:"url"`
+  ExternalUrl        string   `yaml:"external_url"`
 }
 
 type MainInfo struct {
