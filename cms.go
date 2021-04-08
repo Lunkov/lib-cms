@@ -60,6 +60,21 @@ func (c *CMS) HandleFuncs(router *mux.Router) {
     router.HandleFunc(c.Conf.API.Health, c.Health)
   }
   
+  // API PRIVATE MODELS
+  if c.Conf.API.PrivateZone != "" {
+    glog.Infof("LOG: Enable Private API: %s", c.Conf.API.PrivateZone)
+    router.HandleFunc(c.Conf.API.PrivateZone+"{model_id}",             c.getTableModel).Methods("GET")
+    router.HandleFunc(c.Conf.API.PrivateZone+"{model_id}",             c.postItemModel).Methods("POST")
+    router.HandleFunc(c.Conf.API.PrivateZone+"{model_id}/{record_id}", c.updateItemModel).Methods("PUT")
+    router.HandleFunc(c.Conf.API.PrivateZone+"{model_id}/{record_id}", c.getItemModel).Methods("GET")
+    router.HandleFunc(c.Conf.API.PrivateZone+"{model_id}/{record_id}", c.deleteItemModel).Methods("DELETE")
+  }
+  if c.Conf.API.PublicZone != "" {
+    glog.Infof("LOG: Enable Public API: %s", c.Conf.API.PublicZone)
+    router.HandleFunc(c.Conf.API.PublicZone+"{model_id}",                  c.getTableModelPublic).Methods("GET")
+    router.HandleFunc(c.Conf.API.PublicZone+"{model_id}/{record_id}",      c.getItemModelPublic).Methods("GET")
+  }
+  
   if c.Conf.Main.EnableUI {
     glog.Infof("LOG: Starting UI")
     // STATIC
