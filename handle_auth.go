@@ -6,7 +6,6 @@ import (
   "github.com/golang/glog"
 
   "github.com/Lunkov/lib-auth/base"
-  "github.com/Lunkov/lib-auth"
 )
 
 type jwt_struct struct {
@@ -19,11 +18,11 @@ func (c *CMS) checkAuth(w http.ResponseWriter, r *http.Request) (string, *base.U
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding")
   w.Header().Set("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0")
-  sessionID := auth.SessionHTTPStart(w, r)
+  sessionID := c.Sessions.HTTPStart(w, r)
   if glog.V(9) {
     glog.Infof("DBG: REQ: %s: (session=%s)", r.URL, sessionID)
   }
-  user, ok := auth.SessionGetUserInfo(sessionID)
+  user, ok := c.Sessions.GetUserInfo(sessionID)
   if glog.V(9) {
     glog.Infof("DBG: REQ: %s: SessionUser: %v, (%s) ok=%t\n", r.URL, user, sessionID, ok)
   }

@@ -4,8 +4,6 @@ import (
   "net/http"
   "github.com/golang/glog"
   "github.com/gorilla/mux"
-
-  "github.com/Lunkov/lib-auth"
 )
 
 func (c *CMS) GetLanguage(params map[string]string, defaultLang string) string {
@@ -36,7 +34,7 @@ func (cm *CMS) UILogin(w http.ResponseWriter, r *http.Request)  {
   w.Header().Set("Content-Type", "text/html; charset=utf-8")
   params := mux.Vars(r)
   
-  if auth.SessionHasError() || auth.Count() < 1 {
+  if cm.Sessions.HasError() || cm.Auth.Count() < 1 {
     if cm.Conf.Main.AuthRestart {
       cm.RestartAuth()
     }
@@ -46,7 +44,7 @@ func (cm *CMS) UILogin(w http.ResponseWriter, r *http.Request)  {
     return
   }
   
-  user, ok := auth.SessionHTTPUserInfo(w, r)
+  user, ok := cm.Sessions.HTTPUserInfo(w, r)
   if ok {
     if glog.V(9) {
       glog.Infof("DBG: GO TO AFTER LOGIN PAGE: %s", cm.Conf.UI.AfterLoginPage)
@@ -64,14 +62,14 @@ func (cm *CMS) UILogin(w http.ResponseWriter, r *http.Request)  {
   login := r.Form.Get("login")
   password := r.Form.Get("password")
 
-  sessionID := auth.SessionHTTPStart(w, r)
+  sessionID := cm.Sessions.HTTPStart(w, r)
   if login != "" && password != "" && authCode != "" {
-    user, ok := auth.AuthUser(authCode, &post)
+    user, ok := cm.Auth.AuthUser(authCode, &post)
     if ok {
       if glog.V(9) {
         glog.Infof("DBG: GO TO AFTER LOGIN PAGE: %s", cm.Conf.UI.AfterLoginPage)
       }
-      auth.SessionHTTPUserLogin(w, sessionID, &user)
+      cm.Sessions.HTTPUserLogin(w, sessionID, &user)
       http.Redirect(w, r, cm.Conf.UI.AfterLoginPage + cm.GetLanguage(params, user.Language), http.StatusMovedPermanently)
       return
     }
@@ -79,7 +77,7 @@ func (cm *CMS) UILogin(w http.ResponseWriter, r *http.Request)  {
   if glog.V(9) {
     glog.Infof("DBG: RENDER LOGIN PAGE")
   }
-  data := map[string]interface{}{"OAUTH_STATE": SHA1(sessionID), "AUTH_PWD_TYPES": (*auth.GetListPwd()), "AUTH_OAUTH_TYPES": (*auth.GetListOAuth()), "LANGS": (*cm.U.GetLangList()) }
+  data := map[string]interface{}{"OAUTH_STATE": SHA1(sessionID), "AUTH_PWD_TYPES": (*cm.Auth.GetListPwd()), "AUTH_OAUTH_TYPES": (*cm.Auth.GetListOAuth()), "LANGS": (*cm.U.GetLangList()) }
   f := cm.U.RenderPage("login", cm.GetLanguage(params, cm.Conf.Main.DefaultLang), cm.Conf.UI.CSS, false, &data)
   w.Write([]byte(f))
 }
@@ -88,8 +86,8 @@ func (c *CMS) UILogout(w http.ResponseWriter, r *http.Request)  {
   if glog.V(9) {
     glog.Infof("DBG: LOGOUT")
   }
-  sessionID := auth.SessionHTTPStart(w, r)
-  auth.SessionHTTPUserLogout(w, sessionID)
+  sessionID := c.Sessions.HTTPStart(w, r)
+  c.Sessions.HTTPUserLogout(w, sessionID)
   http.Redirect(w, r, c.Conf.UI.DefaultPage, http.StatusMovedPermanently)
 }
 
@@ -99,7 +97,7 @@ func (c *CMS) UIRedirect(w http.ResponseWriter, r *http.Request)  {
   }
   w.Header().Set("Content-Type", "text/html; charset=utf-8")
   params := mux.Vars(r)
-  user, ok := auth.SessionHTTPUserInfo(w, r)
+  user, ok := c.Sessions.HTTPUserInfo(w, r)
   if ok {
     http.Redirect(w, r, c.Conf.UI.AfterLoginPage + c.GetLanguage(params, user.Language), http.StatusMovedPermanently)
     return
@@ -114,7 +112,7 @@ func (c *CMS) UIPage(w http.ResponseWriter, r *http.Request)  {
   
   w.Header().Set("Content-Type", "text/html; charset=utf-8")
   params := mux.Vars(r)
-  user, ok := auth.SessionHTTPUserInfo(w, r)
+  user, ok := c.Sessions.HTTPUserInfo(w, r)
   data := map[string]interface{}{"LANGS": (*c.U.GetLangList()), "IS_AUTH": false}
   if ok {
     data["USER"] = &user // maps.ConvertToMap(user)
@@ -131,7 +129,7 @@ func (c *CMS) UIPrivatePage(w http.ResponseWriter, r *http.Request)  {
   
   w.Header().Set("Content-Type", "text/html; charset=utf-8")
   params := mux.Vars(r)
-  user, ok := auth.SessionHTTPUserInfo(w, r)
+  user, ok := c.Sessions.HTTPUserInfo(w, r)
   if !ok {
     http.Redirect(w, r, c.Conf.UI.LoginPage + c.GetLanguage(params, c.Conf.Main.DefaultLang), http.StatusTemporaryRedirect)
     return

@@ -17,10 +17,12 @@ type CMS struct {
   DB        *models.DBConn
   U         *ui.UI
   HasError   bool
+  Sessions  *auth.Session
+  Auth      *auth.Auth
 }
 
 func New() *CMS {
-  return &CMS{}
+  return &CMS{Sessions: auth.NewSessions(), Auth: auth.New()}
 }
 
 func (c *CMS) InitDB() {
@@ -36,7 +38,7 @@ func (c *CMS) InitUI() {
 
 func (c *CMS) CheckHealth(next http.HandlerFunc) http.HandlerFunc {
   return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-    if auth.SessionHasError() {
+    if c.Sessions.HasError() {
       glog.Errorf("ERR: Auth API: HasError")
       w.WriteHeader(http.StatusInternalServerError)
       return
@@ -47,10 +49,10 @@ func (c *CMS) CheckHealth(next http.HandlerFunc) http.HandlerFunc {
 
 func (c *CMS) Health(w http.ResponseWriter, r *http.Request) {
   status := "OK"
-  if auth.SessionHasError() {
+  if c.Sessions.HasError() {
     status = "ERROR"
   }
-  fmt.Fprintf(w, "{\"status\": \"%s\", \"auth\": %d, \"mode\": \"%s\", \"online\": %d}", status, auth.Count(), auth.SessionMode(), auth.SessionCount())
+  fmt.Fprintf(w, "{\"status\": \"%s\", \"auth\": %d, \"mode\": \"%s\", \"online\": %d}", status, c.Auth.Count(), c.Sessions.Mode(), c.Sessions.Count())
 }
 
 

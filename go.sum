@@ -4,11 +4,15 @@ github.com/Azure/go-ntlmssp v0.0.0-20200615164410-66371956d46c/go.mod h1:chxPXzS
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/Lunkov/lib-auth v0.0.0-20210321170637-7651bb9afa93 h1:Aa01BuPwkeg0097XgT+2VZoJWp4qfGIDeb8XjP/PW2g=
 github.com/Lunkov/lib-auth v0.0.0-20210321170637-7651bb9afa93/go.mod h1:bvxeHLJTr+dTI4bKl+S+DmnGXjGQLflBgaKOb7V4vq8=
+github.com/Lunkov/lib-auth v0.0.0-20210408191403-19767f91b300 h1:FH7bPZDtUNyIz19swAf8u2oiahmBWkqqYBvTXSjmK7M=
+github.com/Lunkov/lib-auth v0.0.0-20210408191403-19767f91b300/go.mod h1:4cbuFSv36KJFfy8q6YD4iDjOd06DEw9CceMlA8XRvPg=
 github.com/Lunkov/lib-cache v0.0.0-20210321162613-dc8178ea91d0/go.mod h1:pEYw7CQ+vv6YwaQseSANi8HtSlobnhUYDw/RGo8qNTE=
 github.com/Lunkov/lib-cache v0.0.0-20210324072534-06b11d17aa4c/go.mod h1:pEYw7CQ+vv6YwaQseSANi8HtSlobnhUYDw/RGo8qNTE=
 github.com/Lunkov/lib-cache v0.0.0-20210330162123-723bb7337989/go.mod h1:uYpitgG0fFSTcrFbKKyfyvysIVviOudmOe0zgm5DyK4=
 github.com/Lunkov/lib-cache v0.0.0-20210405161402-411f663ef4ea h1:hAezbRMFEOabcdUoMcxK0DPbTN0tCuq/0+XXPjYXiQc=
 github.com/Lunkov/lib-cache v0.0.0-20210405161402-411f663ef4ea/go.mod h1:uYpitgG0fFSTcrFbKKyfyvysIVviOudmOe0zgm5DyK4=
+github.com/Lunkov/lib-cache v0.0.0-20210408135458-e8fb7e5e3494 h1:Eyf2c3X045bbOIi2rfOV6PnqDwFyNoHMS0/IFYVyJP8=
+github.com/Lunkov/lib-cache v0.0.0-20210408135458-e8fb7e5e3494/go.mod h1:uYpitgG0fFSTcrFbKKyfyvysIVviOudmOe0zgm5DyK4=
 github.com/Lunkov/lib-env v0.0.0-20201103163857-e525d33d67ef/go.mod h1:06/av9iFrZrtRNN/kGn3iVSXiiJLZS0D4j1BZyk/XdY=
 github.com/Lunkov/lib-env v0.0.0-20210314124046-885d8975482c h1:B6CYcWeFR8N2IszoWkzY9MF1kukrgP1093TNKYR8nDA=
 github.com/Lunkov/lib-env v0.0.0-20210314124046-885d8975482c/go.mod h1:06/av9iFrZrtRNN/kGn3iVSXiiJLZS0D4j1BZyk/XdY=
@@ -27,6 +31,8 @@ github.com/Lunkov/lib-ui v0.0.0-20210407180522-0c199f39f4a7 h1:E7PgPfLtYYpz7f+Bw
 github.com/Lunkov/lib-ui v0.0.0-20210407180522-0c199f39f4a7/go.mod h1:epmAy6kkjWpBEVitOdk+GmxjtyiIbRM4ko8p8B/b/og=
 github.com/Lunkov/lib-ui v0.0.0-20210408054729-dc5dcc9d0086 h1:loa2HwJ8P/SNRqlgw3bFxyvgQBstSX4Xe2AHpZgWN+o=
 github.com/Lunkov/lib-ui v0.0.0-20210408054729-dc5dcc9d0086/go.mod h1:epmAy6kkjWpBEVitOdk+GmxjtyiIbRM4ko8p8B/b/og=
+github.com/Lunkov/lib-ui v0.0.0-20210408061204-590b4c21b389 h1:B4y5d8oEv3CJVIL1V2wnh+jVVpTuVxAqfv2p8DkLL80=
+github.com/Lunkov/lib-ui v0.0.0-20210408061204-590b4c21b389/go.mod h1:epmAy6kkjWpBEVitOdk+GmxjtyiIbRM4ko8p8B/b/og=
 github.com/PuerkitoBio/goquery v1.5.1/go.mod h1:GsLWisAFVj4WgDibEWF4pvYnkVQBpKBKeU+7zCJoLcc=
 github.com/aerospike/aerospike-client-go v4.4.0+incompatible h1:qHwOxX8XkfgemJpVCiW+uUlScPLX6+Koig/4x8OVEK0=
 github.com/aerospike/aerospike-client-go v4.4.0+incompatible/go.mod h1:zj8LBEnWBDOVEIJt8LvaRvDG5ARAoa5dBeHaB472NRc=
