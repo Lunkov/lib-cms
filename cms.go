@@ -32,7 +32,7 @@ func (c *CMS) InitDB() {
 
 func (c *CMS) InitUI() {
   c.U = ui.NewUI(c.Conf.UI.PathTemplates, &c.Conf.UI.CacheForms, &c.Conf.UI.CacheViews, &c.Conf.UI.CachePages, &c.Conf.UI.CacheRenders) 
-  c.U.Init(c.Conf.ConfigPath, false, false)
+  c.U.Init(c.Conf.ConfigPath, c.Conf.UI.EnableFileWatcher, c.Conf.UI.EnableMinify)
 }
 
 
