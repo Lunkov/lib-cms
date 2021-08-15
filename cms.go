@@ -22,11 +22,10 @@ type CMS struct {
 }
 
 func New() *CMS {
-  return &CMS{Sessions: auth.NewSessions(), Auth: auth.New()}
+  return &CMS{Sessions: auth.NewSessions(), Auth: auth.New(), DB: models.New()}
 }
 
 func (c *CMS) InitDB() {
-  c.DB = models.New()
   c.DB.Init(models.ConnectStr(c.Conf.PostgresWrite), models.ConnectStr(c.Conf.PostgresRead), c.Conf.ConfigPath)
 }
 
